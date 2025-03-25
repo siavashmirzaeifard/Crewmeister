@@ -1,6 +1,5 @@
+import 'package:crewmeister/data/model/member_absence.dart';
 import 'package:equatable/equatable.dart';
-
-import '/data/model/absence.dart';
 
 abstract class AbsenceState extends Equatable {
   const AbsenceState();
@@ -21,12 +20,17 @@ class AbsenceLoading extends AbsenceState {
 }
 
 class AbsenceSuccess extends AbsenceState {
-  const AbsenceSuccess({required this.response});
+  const AbsenceSuccess({
+    required this.response,
+    required this.page,
+    required this.total,
+  });
 
-  final List<Absence> response;
+  final List<MemberAbsence> response;
+  final int page, total;
 
   @override
-  List<Object?> get props => [response];
+  List<Object?> get props => [response, page, total];
 }
 
 class AbsenceFailure extends AbsenceState {

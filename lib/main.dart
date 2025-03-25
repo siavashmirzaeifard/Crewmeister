@@ -26,7 +26,8 @@ class MyApp extends StatelessWidget {
         BlocProvider<AbsenceBloc>(
           create:
               (context) =>
-                  AbsenceBloc(repository: repository)..add(LoadAbsences()),
+                  AbsenceBloc(repository: repository)
+                    ..add(LoadAbsences(page: 1)),
         ),
       ],
       child: MaterialApp(

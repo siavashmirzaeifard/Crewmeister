@@ -11,5 +11,12 @@ abstract class AbsenceEvent extends Equatable {
 }
 
 class LoadAbsences extends AbsenceEvent {
-  const LoadAbsences();
+  const LoadAbsences({required this.page, this.filterType, this.filterDate});
+
+  final int page;
+  final String? filterType;
+  final DateTime? filterDate;
+
+  @override
+  List<Object?> get props => [page, filterType, filterDate];
 }
