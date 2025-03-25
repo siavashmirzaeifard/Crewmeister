@@ -1,5 +1,5 @@
 import 'package:crewmeister/core/util/data_loader.dart';
-import 'package:crewmeister/data/model/absence.dart';
+import 'package:crewmeister/data/model/member_absence.dart';
 import 'package:crewmeister/data/provider/get_api.dart';
 import 'package:crewmeister/data/repository/absence_repository.dart';
 
@@ -11,20 +11,16 @@ class FakeAbsenceRepository extends AbsenceRepository {
   FakeAbsenceRepository() : super(api: dummyApi);
 
   @override
-  Future<List<Absence>> getAbsences() async {
+  Future<List<MemberAbsence>> getAbsences() async {
     return [
-      Absence(
+      MemberAbsence(
         id: 1,
         userId: 123,
+        memberName: 'Siavash Miryaei-Fard',
         type: 'vacation',
-        startDate: '2025-03-25',
-        endDate: '2025-03-26',
-        createdAt: '2025-03-01T00:00:00',
-        confirmedAt: '2025-03-01T00:00:01',
-        rejectedAt: null,
-        crewId: 1,
+        period: '2025-03-25 - 2025-03-26',
         memberNote: 'some notes here ;)',
-        admitterId: null,
+        status: 'Confirmed',
         admitterNote: '',
       ),
     ];
@@ -33,14 +29,14 @@ class FakeAbsenceRepository extends AbsenceRepository {
 
 class ErrorAbsenceRepository extends FakeAbsenceRepository {
   @override
-  Future<List<Absence>> getAbsences() async {
+  Future<List<MemberAbsence>> getAbsences() async {
     throw Exception('Absence Error');
   }
 }
 
 class EmptyAbsenceRepository extends FakeAbsenceRepository {
   @override
-  Future<List<Absence>> getAbsences() async {
+  Future<List<MemberAbsence>> getAbsences() async {
     return [];
   }
 }

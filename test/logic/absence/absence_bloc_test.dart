@@ -20,7 +20,10 @@ void main() {
       blocTest<AbsenceBloc, AbsenceState>(
         'emits AbsenceLoading state + AbsenceSuccess state -> when LoadAbsences is added',
         build: () => absenceBloc,
-        act: (bloc) => bloc.add(LoadAbsences()),
+        act:
+            (bloc) => bloc.add(
+              LoadAbsences(page: 1, filterType: null, filterDate: null),
+            ),
         expect: () => [isA<AbsenceLoading>(), isA<AbsenceSuccess>()],
       );
     });
@@ -37,7 +40,10 @@ void main() {
       blocTest<AbsenceBloc, AbsenceState>(
         'emits AbsenceLoading state + AbsenceFailure state -> when repository throws exception',
         build: () => absenceBloc,
-        act: (bloc) => bloc.add(LoadAbsences()),
+        act:
+            (bloc) => bloc.add(
+              LoadAbsences(page: 1, filterType: null, filterDate: null),
+            ),
         expect: () => [isA<AbsenceLoading>(), isA<AbsenceFailure>()],
       );
     });
@@ -54,7 +60,10 @@ void main() {
       blocTest<AbsenceBloc, AbsenceState>(
         'emits AbsenceLoading state + AbsenceLoaded state -> with empty list when no absence found',
         build: () => absenceBloc,
-        act: (bloc) => bloc.add(LoadAbsences()),
+        act:
+            (bloc) => bloc.add(
+              LoadAbsences(page: 1, filterType: null, filterDate: null),
+            ),
         expect:
             () => [
               isA<AbsenceLoading>(),
