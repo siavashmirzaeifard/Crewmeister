@@ -27,7 +27,6 @@ Crewmeister challenge app is a Flutter app that simulates an absence management 
 - **lib/data:** Data models, repositories, and API provider.
 - **lib/logic:** BLoC implementations for state management.
 - **lib/presentation:** UI screens and reusable widgets.
-- **lib/utils:** Bonus utilities such as the iCal generator.
 
 ### Running the App
 
