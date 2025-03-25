@@ -54,74 +54,76 @@ class _MainScreenState extends State<MainScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(title: const Text('Absence Manager')),
-      body: Column(
-        children: [
-          FilterControls(
-            filterType: filterType,
-            filterDate: filterDate,
-            onFilterChanged: onFilterChanged,
-          ),
+      body: SafeArea(
+        child: Column(
+          children: [
+            FilterControls(
+              filterType: filterType,
+              filterDate: filterDate,
+              onFilterChanged: onFilterChanged,
+            ),
 
-          // Main area that displays the absence list or relevant state messages.
-          Expanded(
-            child: BlocBuilder<AbsenceBloc, AbsenceState>(
-              builder: (context, state) {
-                if (state is AbsenceLoading) {
-                  // Show a loading indicator while data is being fetched.
-                  return const Center(child: CircularProgressIndicator());
-                } else if (state is AbsenceFailure) {
-                  // Display an error message if data loading fails.
-                  return Center(child: Text('Error: ${state.message}'));
-                } else if (state is AbsenceSuccess) {
-                  // If the list is empty, show a message.
-                  if (state.response.isEmpty) {
-                    return const Center(child: Text('No absences found'));
+            // Main area that displays the absence list or relevant state messages.
+            Expanded(
+              child: BlocBuilder<AbsenceBloc, AbsenceState>(
+                builder: (context, state) {
+                  if (state is AbsenceLoading) {
+                    // Show a loading indicator while data is being fetched.
+                    return const Center(child: CircularProgressIndicator());
+                  } else if (state is AbsenceFailure) {
+                    // Display an error message if data loading fails.
+                    return Center(child: Text('Error: ${state.message}'));
+                  } else if (state is AbsenceSuccess) {
+                    // If the list is empty, show a message.
+                    if (state.response.isEmpty) {
+                      return const Center(child: Text('No absences found'));
+                    }
+
+                    // In case none of above, display the list of absences.
+                    return AbsenceListWidget(
+                      total: state.total,
+                      absences: state.response,
+                    );
                   }
 
-                  // In case none of above, display the list of absences.
-                  return AbsenceListWidget(
-                    total: state.total,
-                    absences: state.response,
-                  );
+                  // Fallback container in case of an unexpected state.
+                  return Container();
+                },
+              ),
+            ),
+            BlocBuilder<AbsenceBloc, AbsenceState>(
+              builder: (context, state) {
+                int total = 0;
+                if (state is AbsenceSuccess) {
+                  total = state.total;
                 }
-
-                // Fallback container in case of an unexpected state.
-                return Container();
+                return PaginationControls(
+                  currentPage: currentPage,
+                  total: total,
+                  itemsPerPage: itemsPerPage,
+                  onPrevious: () {
+                    if (currentPage > 1) {
+                      setState(() {
+                        currentPage--;
+                      });
+                      loadData();
+                    }
+                  },
+                  onNext: () {
+                    // Calculate the last page based on total items and items per page.
+                    final lastPage = (total + itemsPerPage - 1) ~/ itemsPerPage;
+                    if (currentPage < lastPage) {
+                      setState(() {
+                        currentPage++;
+                      });
+                      loadData();
+                    }
+                  },
+                );
               },
             ),
-          ),
-          BlocBuilder<AbsenceBloc, AbsenceState>(
-            builder: (context, state) {
-              int total = 0;
-              if (state is AbsenceSuccess) {
-                total = state.total;
-              }
-              return PaginationControls(
-                currentPage: currentPage,
-                total: total,
-                itemsPerPage: itemsPerPage,
-                onPrevious: () {
-                  if (currentPage > 1) {
-                    setState(() {
-                      currentPage--;
-                    });
-                    loadData();
-                  }
-                },
-                onNext: () {
-                  // Calculate the last page based on total items and items per page.
-                  final lastPage = (total + itemsPerPage - 1) ~/ itemsPerPage;
-                  if (currentPage < lastPage) {
-                    setState(() {
-                      currentPage++;
-                    });
-                    loadData();
-                  }
-                },
-              );
-            },
-          ),
-        ],
+          ],
+        ),
       ),
     );
   }

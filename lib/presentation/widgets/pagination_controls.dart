@@ -22,7 +22,7 @@ class PaginationControls extends StatelessWidget {
     // Calculate the last page number based on total items and items per page.
     final lastPage = (total + itemsPerPage - 1) ~/ itemsPerPage;
     return Row(
-      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
       children: [
         // Previous button, disabled if the current page is the first.
         ElevatedButton(

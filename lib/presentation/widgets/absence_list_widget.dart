@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 
+import '/data/model/member_absence.dart';
+
 /// Widget that displays a list of absences and the total count.
 class AbsenceListWidget extends StatelessWidget {
   const AbsenceListWidget({
@@ -8,9 +10,9 @@ class AbsenceListWidget extends StatelessWidget {
     required this.absences,
   }) : response = absences;
 
-  final List absences; // List of absence details.
+  final List<MemberAbsence> absences; // List of absence details.
   final int total; // Total number of absences.
-  final List response;
+  final List<MemberAbsence> response;
 
   @override
   Widget build(BuildContext context) {
@@ -28,7 +30,10 @@ class AbsenceListWidget extends StatelessWidget {
               final detail = absences[index];
               return ListTile(
                 // Member's name
-                title: Text(detail.memberName),
+                title: Text(
+                  detail.memberName,
+                  style: TextStyle(fontWeight: FontWeight.bold),
+                ),
                 subtitle: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
@@ -40,7 +45,17 @@ class AbsenceListWidget extends StatelessWidget {
                     if (detail.memberNote.isNotEmpty)
                       Text('Member Note: ${detail.memberNote}'),
                     // Status of the absence
-                    Text('Status: ${detail.status}'),
+                    Text(
+                      'Status: ${detail.status}',
+                      style: TextStyle(
+                        color:
+                            detail.status.toLowerCase() == 'confirmed'
+                                ? Colors.green
+                                : detail.status.toLowerCase() == 'rejected'
+                                ? Colors.red
+                                : Colors.black,
+                      ),
+                    ),
                     // If available, show the admitter note.
                     if (detail.admitterNote.isNotEmpty)
                       Text('Admitter Note: ${detail.admitterNote}'),
