@@ -1,5 +1,6 @@
 import 'dart:convert';
 
+import 'package:crewmeister/core/util/period_calculator.dart';
 import 'package:http/http.dart' as http;
 
 import '/data/model/absence.dart';
@@ -38,7 +39,7 @@ class AbsenceRepository {
     // Merge data into MemberAbsence
     return absences.map((absence) {
       final memberName = memberMap[absence.userId] ?? 'Unknown';
-      final period = '${absence.startDate} - ${absence.endDate}';
+      final period = calculatePeriod(absence.startDate, absence.endDate);
       final status =
           (absence.confirmedAt != null && absence.confirmedAt!.isNotEmpty)
               ? 'Confirmed'
