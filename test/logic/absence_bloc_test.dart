@@ -4,7 +4,7 @@ import 'package:crewmeister/logic/absence/absence_event.dart';
 import 'package:crewmeister/logic/absence/absence_state.dart';
 import 'package:flutter_test/flutter_test.dart';
 
-import '../../fake_repository.dart';
+import '../fake_repository.dart';
 
 void main() {
   group('AbsenceBloc Tests', () {
