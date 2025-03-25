@@ -1,3 +1,4 @@
+/// This model combines both members and absence response in repository layer.
 class MemberAbsence {
   final int id;
   final int userId;

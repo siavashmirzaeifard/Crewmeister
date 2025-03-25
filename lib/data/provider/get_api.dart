@@ -5,6 +5,9 @@ import 'package:http/http.dart' as http;
 
 import '/core/util/data_loader.dart';
 
+/// GetApi should be a generic Get method that gets us the raw data with proper error handling, and then we
+///  use and convert it into desired model in repository layer.
+//  but for this challenge I just try to simulate a HTTP request.
 class GetApi {
   const GetApi({required this.loader});
 

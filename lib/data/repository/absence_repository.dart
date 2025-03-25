@@ -1,13 +1,17 @@
 import 'dart:convert';
 
-import 'package:crewmeister/core/util/period_calculator.dart';
 import 'package:http/http.dart' as http;
 
+import '/core/util/period_calculator.dart';
 import '/data/model/absence.dart';
 import '/data/model/member.dart';
 import '/data/model/member_absence.dart';
 import '/data/provider/get_api.dart';
 
+/// This layer is responsible to convert our raw data that we got from provider layer
+///  into desired response model and we can use them in our business logic.
+///  AbsenceRepository is responsible for fetching absence and member data,
+///  merging them into a MemberAbsence model.
 class AbsenceRepository {
   AbsenceRepository({required this.api});
 

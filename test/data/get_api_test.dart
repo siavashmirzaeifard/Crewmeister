@@ -6,14 +6,15 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:http/http.dart' as http;
 
 class FakeDataLoader extends DataLoader {
-  final String responseBody;
-  final int statusCode;
-  final bool throwTimeout;
   FakeDataLoader({
     required this.responseBody,
     required this.statusCode,
     this.throwTimeout = false,
   });
+
+  final String responseBody;
+  final int statusCode;
+  final bool throwTimeout;
 
   @override
   Future<http.Response> load(Uri url) async {

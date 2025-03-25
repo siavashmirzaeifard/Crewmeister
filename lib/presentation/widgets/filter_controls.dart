@@ -1,9 +1,7 @@
 import 'package:flutter/material.dart';
 
+/// DropDown widget that provides filtering controls for absence data.
 class FilterControls extends StatelessWidget {
-  final String? filterType;
-  final DateTime? filterDate;
-  final Function({String? type, DateTime? date}) onFilterChanged;
   const FilterControls({
     super.key,
     required this.filterType,
@@ -11,10 +9,16 @@ class FilterControls extends StatelessWidget {
     required this.onFilterChanged,
   });
 
+  final String? filterType; // Selected filter type
+  final DateTime? filterDate; // Selected filter date
+  final Function({String? type, DateTime? date})
+  onFilterChanged; // Callback that used when the filter values change.
+
   @override
   Widget build(BuildContext context) {
     return Row(
       children: [
+        // Dropdown to select type
         DropdownButton<String>(
           hint: const Text('Filter Type'),
           value: filterType,
@@ -27,6 +31,8 @@ class FilterControls extends StatelessWidget {
             onFilterChanged(type: value, date: filterDate);
           },
         ),
+
+        // Button to select a filter date
         ElevatedButton(
           onPressed: () async {
             final picked = await showDatePicker(
@@ -39,6 +45,8 @@ class FilterControls extends StatelessWidget {
           },
           child: const Text('Filter Date'),
         ),
+
+        // Button to clear both filters
         ElevatedButton(
           onPressed: () => onFilterChanged(type: null, date: null),
           child: const Text('Clear Filters'),

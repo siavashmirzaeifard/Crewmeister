@@ -1,3 +1,5 @@
+/// Calculates period between two dates that should be human readable like "2 days", "3 hours", or "15 minutes".
+/// If parsing fails, it returns the original date range.
 String calculatePeriod(String startDateStr, String endDateStr) {
   try {
     final start = DateTime.parse(startDateStr);
